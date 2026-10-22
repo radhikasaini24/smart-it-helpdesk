@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Tickets - Smart IT Helpdesk</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        th {
+            background-color: #24449b;
+            color: white;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        select, button {
+            padding: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Smart IT Helpdesk</h1>
+    <h2>Submitted Tickets</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ticket ID</th>
+                <th>Issue Title</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Update Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.title }}</td>
+                <td>{{ ticket.category }}</td>
+                <td>{{ ticket.description }}</td>
+                <td>{{ ticket.status }}</td>
+
+                <td>
+                    <form action="/update-status/{{ ticket.id }}" method="POST">
+
+                        <select name="status">
+                            <option value="Open" {% if ticket.status == "Open" %}selected{% endif %}>Open</option>
+                            <option value="In Progress" {% if ticket.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                            <option value="Resolved" {% if ticket.status == "Resolved" %}selected{% endif %}>Resolved</option>
+                        </select>
+
+                        <button type="submit">Update</button>
+
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
+
